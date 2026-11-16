@@ -1,6 +1,6 @@
 {
- "name": "Gill Study Bible",
- "short_name": "Gill Bible",
+ "name": "Particular Baptist Study Bible",
+ "short_name": "PB Study Bible",
  "start_url": "./index.html",
  "scope": "./",
  "display": "standalone",

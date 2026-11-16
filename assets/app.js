@@ -21,7 +21,7 @@
     root.setAttribute('data-ed', ED); set('gsb-ed', ED);
   }
   function withEd(h) {      // point a link on a shared page at the chosen translation
-    if (/^\.\.\/(kjv|bsb|msb)\//.test(h)) return h.replace(/^\.\.\/(kjv|bsb|msb)\//, '../' + ED + '/');
+    if (/^(\.\.\/)?(kjv|bsb|msb)\//.test(h)) return h.replace(/^(\.\.\/)?(kjv|bsb|msb)\//, '$1' + ED + '/');
     var m = /^((?:\.\.\/(?:gill|compare|confessions)\/)?[a-z0-9-]+\.html)(?:\?ed=[a-z]+)?(#.*)?$/.exec(h);
     return m ? m[1] + '?ed=' + ED + (m[2] || '') : h;
   }
@@ -169,7 +169,7 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     var top = document.body.getAttribute('data-top') || '';
-    var base = OWN ? (document.body.getAttribute('data-root') || '') : '../' + ED + '/';
+    var base = OWN ? (document.body.getAttribute('data-root') || '') : top + ED + '/';
     var page = /([a-z0-9]+)-(\d+)\.html$/.exec(window.location.pathname);
     if (!OWN) pointLinks();
 
@@ -180,7 +180,7 @@
       es.addEventListener('change', function () {
         var to = es.value;
         if (!OWN) {          // Gill and compare pages change in place
-          ED = to; set('gsb-ed', ED); root.setAttribute('data-ed', ED); base = '../' + ED + '/'; pointLinks(); closeGill();
+          ED = to; set('gsb-ed', ED); root.setAttribute('data-ed', ED); base = top + ED + '/'; pointLinks(); closeGill();
           return;
         }
         var m = /\/(kjv|bsb|msb)\/([^?#]*)$/.exec(window.location.pathname), path = (m && m[2]) || 'index.html';

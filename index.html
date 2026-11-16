@@ -1,7 +1,44 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gill Study Bible</title>
-<link rel="stylesheet" href="assets/style.css"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="assets/icon-180.png">
-<script>(function(){var e='kjv';try{var s=localStorage.getItem('gsb-ed');if(/^(kjv|bsb|msb)$/.test(s))e=s;}catch(x){}window.location.replace(e+'/index.html');})();</script>
-</head><body><main><section class="titlepage"><h1>Gill Study Bible</h1><p class="tp-how">Choose a translation:</p>
-<p><a href="kjv/index.html">King James Version</a><br><a href="bsb/index.html">Berean Standard Bible</a><br><a href="msb/index.html">Majority Standard Bible</a></p></section></main></body></html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Particular Baptist Study Bible</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta name="theme-color" content="#fbfbf8">
+<script src="assets/books.js"></script>
+<script src="assets/app.js"></script>
+</head>
+<body class="landingpage shared" data-root="kjv/" data-top="">
+<header class="bar">
+<a class="brand" href="index.html"><span>Particular Baptist Study Bible</span></a>
+<select id="edsel" class="edsel" aria-label="Translation"><option value="kjv" selected>KJV</option><option value="bsb">BSB</option><option value="msb">MSB</option></select>
+<form class="go" role="search"><input id="go" type="text" placeholder="Go to: John 3:16" aria-label="Go to a passage, or look up a word" autocomplete="off" spellcheck="false"><span id="gomsg" aria-live="polite"></span></form>
+<nav class="links"><a class="m" href="index.html">Home</a><a href="kjv/index.html#books">Bible</a><a href="confessions/index.html">Confessions</a><a href="kjv/concordance/index.html">Concordance</a><a href="kjv/plans/mcheyne.html">M‘Cheyne</a><a href="kjv/plans/chronological.html">Chronological</a><a href="kjv/about.html">About</a></nav>
+<button type="button" id="theme" aria-label="Switch between light and dark">Dark</button>
+</header>
+<main>
+<section class="landing">
+<p class="tp-the">The</p>
+<h1>Particular Baptist<br>Study Bible</h1>
+<p class="lead">The Holy Scriptures in three translations, with John Gill’s Exposition and the confession and catechisms of the Particular Baptists</p>
+<p class="tp-orn" aria-hidden="true">❧</p>
+<p class="start"><a class="btn solid" href="kjv/index.html">Begin reading</a> <span id="resume" hidden><a class="btn" href="#"></a></span></p>
+
+</section>
+<section class="lcontents">
+<h2>The contents</h2>
+<nav aria-label="Contents"><a href="kjv/index.html#books"><span class="n">The Bible</span><span class="w">King James, Berean Standard and Majority Standard, singly or side by side</span></a><a href="kjv/index.html#books"><span class="n">Gill’s Exposition</span><span class="w">his comment on 29,408 verses, opened from the verse number</span></a><a href="confessions/lbcf.html"><span class="n">The Confession of 1689</span><span class="w">thirty-two chapters, every proof text linked</span></a><a href="confessions/index.html"><span class="n">The catechisms</span><span class="w">the Baptist Catechism and Collins’s Orthodox Catechism</span></a><a href="kjv/concordance/index.html"><span class="n">Concordance</span><span class="w">3,500 keywords for each translation</span></a><a href="kjv/plans/mcheyne.html"><span class="n">Reading plans</span><span class="w">M‘Cheyne’s calendar, and the Bible in order of events</span></a></nav>
+</section>
+<section class="offline" id="offline" hidden>
+<h2>Offline reading</h2>
+<p>Pages you have opened are kept on this device and open again without a connection. To keep everything:</p>
+<p><button type="button" data-save="text">Save the Bible text</button> <button type="button" data-save="gill">Save Gill’s commentary</button></p>
+<p class="offmsg" id="offmsg" aria-live="polite"></p>
+</section>
+<p class="lfoot">Every text here is in the public domain. Free to read, free to share, and it works without a connection once saved.</p>
+</main>
+</body>
+</html>

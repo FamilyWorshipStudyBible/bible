@@ -1,11 +1,11 @@
-GILL STUDY BIBLE: KJV, BSB and MSB in one website
-==================================================
+PARTICULAR BAPTIST STUDY BIBLE
+==============================
 
 ON A COMPUTER (no internet needed)
 ----------------------------------
 Open the file "index.html" in this folder. Keep the whole folder together.
 
-- The box at the top left changes translation and keeps your place.
+- The box at the top changes translation and keeps your place.
 - "Compare translations", beside each chapter heading, shows two or three
   translations verse by verse. Tick the ones you want.
 - Verse numbers open everything tied to that verse: Gill's comment, and
