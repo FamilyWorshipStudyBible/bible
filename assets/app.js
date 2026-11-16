@@ -218,7 +218,15 @@
     }
 
     // hosted copy: keep pages for offline reading
-    var hosted = window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    // opened as an app (from the home screen, or the App Store app) there is no browser Back button, so give one
+    var inApp = window.location.protocol === 'capacitor:' || !!window.Capacitor || window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    var barEl = document.querySelector('header.bar');
+    if (inApp && barEl && !EMBED && window.history.length > 1) {
+      var bk = document.createElement('button'); bk.type = 'button'; bk.className = 'back'; bk.setAttribute('aria-label', 'Back'); bk.textContent = '\u2039';
+      bk.addEventListener('click', function () { window.history.back(); });
+      barEl.insertBefore(bk, barEl.firstChild);
+    }
+    var hosted = window.location.protocol === 'https:' || ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && /^http/.test(window.location.protocol));
     if (hosted && 'serviceWorker' in navigator && window.caches && !EMBED) {
       navigator.serviceWorker.register(top + 'sw.js').catch(function () {});
       var off = document.getElementById('offline'), om = document.getElementById('offmsg');

@@ -384,3 +384,9 @@ body.landingpage .offline{text-align:center}
 .lcontents a .n{max-width:100%}
 .gillhome .titlepage h1{font-size:2.1rem;margin-bottom:1rem}
 .gillhome .tp-how{max-width:30rem;margin:0 auto}
+/* ---- installed as an app: room for the status bar, and a way back */
+.bar{padding-top:max(.45rem,env(safe-area-inset-top))}
+body{padding-bottom:env(safe-area-inset-bottom)}
+.bar .back{order:-1;font-size:1.1rem;line-height:1;padding:.05rem .6rem .15rem}
+.lcontents a{display:block;text-align:center;font-size:1.25rem;line-height:1.3;color:var(--accent);padding:.75rem .5rem}
+.lcontents a:hover{text-decoration:underline;text-underline-offset:.15em}
