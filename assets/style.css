@@ -367,7 +367,6 @@ body.landingpage main{max-width:36rem}
 .btn{display:inline-block;padding:.42rem 1.3rem;border-radius:2rem;border:1px solid var(--accent);color:var(--accent);min-height:44px;box-sizing:border-box;text-decoration:none!important}
 .btn.solid{background:var(--accent);color:var(--paper)}
 .btn:hover{filter:brightness(1.08)}
-#resume .btn::before{content:"Continue: "}
 .lcontents{margin-top:3.6rem}
 .lcontents h2{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.16em;color:var(--accent);text-align:center;margin:0 0 .4rem}
 .lcontents nav{border-top:1px solid var(--rule)}
@@ -378,3 +377,10 @@ body.landingpage main{max-width:36rem}
 .lfoot{margin:3rem 0 0;padding-top:1rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--muted);text-align:center}
 body.landingpage .offline{text-align:center}
 @media (max-width:30rem){.landing h1{font-size:2.3rem}.landing{padding-top:1.6rem}}
+.landing .startlabel{font-size:.8rem;font-variant-caps:all-small-caps;letter-spacing:.16em;color:var(--muted);margin-bottom:.5rem}
+.btn.e-kjv{border-color:var(--kjv);color:var(--kjv)}.btn.e-bsb{border-color:var(--bsb);color:var(--bsb)}.btn.e-msb{border-color:var(--msb);color:var(--msb)}
+.landing .cont{margin-top:.8rem;font-style:italic;font-size:.9rem}
+.landing .cont a::before{content:"Continue where you left off: "}
+.lcontents a .n{max-width:100%}
+.gillhome .titlepage h1{font-size:2.1rem;margin-bottom:1rem}
+.gillhome .tp-how{max-width:30rem;margin:0 auto}
