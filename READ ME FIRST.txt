@@ -8,7 +8,28 @@ Open the file "index.html" in this folder. Keep the whole folder together.
 - The box at the top left changes translation and keeps your place.
 - "Compare translations", beside each chapter heading, shows two or three
   translations verse by verse. Tick the ones you want.
-- Verse numbers open Gill's comment.
+- Verse numbers open everything tied to that verse: Gill's comment, and
+  any place the 1689 Confession or a catechism cites it.
+- "Confessions" in the menu holds the 1689 Confession, the Baptist
+  Catechism and Collins's Orthodox Catechism. Tap any scripture reference
+  there to read the verse in the translation you have chosen.
+
+
+UPDATING A SITE YOU HAVE ALREADY PUT ON GITHUB
+----------------------------------------------
+  1. In GitHub Desktop choose Repository > "Show in Explorer" (Windows)
+     or "Show in Finder" (Mac). That opens your repository folder.
+  2. Open THIS folder in a second window, select everything inside it,
+     and copy it into the repository folder. When asked, choose to
+     REPLACE the files that are already there. Do not delete anything
+     first; copying over the top is enough.
+  3. Back in GitHub Desktop the changed files are listed on the left.
+     Type a short summary (for example "add confessions"), press
+     "Commit to main", then "Push origin".
+  4. The site updates itself within a few minutes. On each phone or
+     computer, open the site and refresh once or twice to see the new
+     version. If you used the "Offline reading" buttons before, press
+     them again so the new pages are saved too.
 
 
 ON AN IPHONE, OR TO SHARE WITH OTHERS

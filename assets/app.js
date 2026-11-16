@@ -22,7 +22,7 @@
   }
   function withEd(h) {      // point a link on a shared page at the chosen translation
     if (/^\.\.\/(kjv|bsb|msb)\//.test(h)) return h.replace(/^\.\.\/(kjv|bsb|msb)\//, '../' + ED + '/');
-    var m = /^((?:\.\.\/(?:gill|compare)\/)?[a-z0-9]+-\d+\.html)(?:\?ed=[a-z]+)?(#.*)?$/.exec(h);
+    var m = /^((?:\.\.\/(?:gill|compare|confessions)\/)?[a-z0-9-]+\.html)(?:\?ed=[a-z]+)?(#.*)?$/.exec(h);
     return m ? m[1] + '?ed=' + ED + (m[2] || '') : h;
   }
   function pointLinks() {
@@ -93,31 +93,68 @@
     return true;
   }
 
-  // ---- Gill's comment on a verse, shown in a box over the text
+  // ---- a box over the text: Gill's comment on a verse, a paragraph of the confession, or the verses a reference points to
   var gbox = null, gboxFor = null;
   function closeGill() { if (gbox) { gbox.parentNode.removeChild(gbox); gbox = null; gboxFor = null; } }
-  function openGill(a) {
+  function embedUrl(href) {
+    var p = href.split('#'), u = p[0] + (p[0].indexOf('?') < 0 ? '?' : '&') + 'embed=1&theme=' + (isDark() ? 'dark' : 'light');
+    if (!/[?&]ed=/.test(u)) u += '&ed=' + ED;
+    return u + '#' + (p[1] || '');
+  }
+  function openBox(a, title, tabs) {
     if (gboxFor === a) { closeGill(); return; }
     closeGill(); closePop();
-    var href = a.getAttribute('href'), parts = href.split('#');
-    gbox = document.createElement('div'); gbox.className = 'gbox'; gbox.setAttribute('role', 'dialog');
-    gbox.setAttribute('aria-label', a.getAttribute('title') || 'Gill on this verse');
+    if (!tabs.length) return;
+    gbox = document.createElement('div'); gbox.className = 'gbox'; gbox.setAttribute('role', 'dialog'); gbox.setAttribute('aria-label', title);
     var head = document.createElement('div'); head.className = 'gbox-h';
-    var ttl = document.createElement('span'); ttl.textContent = a.getAttribute('title') || 'Gill on this verse';
+    var ttl = document.createElement('span'); ttl.textContent = title;
     var x = document.createElement('button'); x.type = 'button'; x.textContent = 'Close'; x.addEventListener('click', closeGill);
-    head.appendChild(ttl); head.appendChild(x);
-    var fr = document.createElement('iframe');
-    fr.title = ttl.textContent;
-    fr.src = parts[0] + (parts[0].indexOf('?') < 0 ? '?' : '&') + 'embed=1&theme=' + (isDark() ? 'dark' : 'light') + '#' + (parts[1] || '');
-    var full = document.createElement('a'); full.href = href; full.className = 'gbox-full'; full.textContent = 'Open the full commentary';
-    head.insertBefore(full, x);
-    gbox.appendChild(head); gbox.appendChild(fr);
+    var full = document.createElement('a'); full.className = 'gbox-full';
+    head.appendChild(ttl); head.appendChild(full); head.appendChild(x);
+    var fr = document.createElement('iframe'); fr.title = title;
+    gbox.appendChild(head);
+    var btns = [];
+    var show = function (i) {
+      fr.src = embedUrl(tabs[i].href); full.href = tabs[i].full || tabs[i].href; full.textContent = tabs[i].fullLabel;
+      for (var k = 0; k < btns.length; k++) btns[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
+    };
+    if (tabs.length > 1) {
+      var bar = document.createElement('div'); bar.className = 'gbox-tabs'; bar.setAttribute('role', 'tablist');
+      tabs.forEach(function (t, i) {
+        var bt = document.createElement('button'); bt.type = 'button'; bt.textContent = t.label; bt.setAttribute('role', 'tab');
+        bt.addEventListener('click', function () { show(i); }); btns.push(bt); bar.appendChild(bt);
+      });
+      gbox.appendChild(bar);
+    }
+    gbox.appendChild(fr);
     document.body.appendChild(gbox);
+    show(0);
     var r = a.getBoundingClientRect(), vw = document.documentElement.clientWidth, w = gbox.offsetWidth;
     var main = document.querySelector('main'), mr = main ? main.getBoundingClientRect() : { left: 8 };
     gbox.style.left = (Math.max(8, Math.min(mr.left + 8, vw - w - 8)) + window.pageXOffset) + 'px';
     gbox.style.top = (r.bottom + window.pageYOffset + 8) + 'px';
     gboxFor = a; x.focus();
+  }
+  // everything tied to one verse: Gill, and each place the confession or a catechism cites it
+  function openVerse(el) {
+    var top = document.body.getAttribute('data-top') || '', tabs = [], href = el.tagName === 'A' ? el.getAttribute('href') : null;
+    if (href) tabs.push({ label: 'Gill', href: href, fullLabel: 'Open the full commentary' });
+    var s = (el.getAttribute('data-s') || '').split(' ');
+    for (var i = 0; i < s.length; i++) {
+      var k = s[i].charAt(0), id = s[i].slice(1), pp = id.split('.');
+      if (k === 'l') tabs.push({ label: 'Confession ' + id, href: top + 'confessions/lbcf-' + pp[0] + '.html#p' + pp[1], fullLabel: 'Open the Confession' });
+      if (k === 'b') tabs.push({ label: 'Baptist Catechism ' + id, href: top + 'confessions/bc.html#q' + id, fullLabel: 'Open the catechism' });
+      if (k === 'o') tabs.push({ label: 'Orthodox Catechism ' + id, href: top + 'confessions/oc.html#q' + id, fullLabel: 'Open the catechism' });
+    }
+    var h1 = document.querySelector('.chead h1'), n = (el.id || '').replace(/^[a-z]+/, '');
+    var title = (el.getAttribute('title') || '').replace(/^Gill on /, '').replace(/ in the confession.*$/, '') || (h1 ? h1.textContent.replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '') + ':' + n : 'Verse ' + n);
+    openBox(el, title, tabs);
+  }
+  // a scripture reference in the confession or a catechism: the verses, in the translation being read
+  function openRef(a) {
+    var top = document.body.getAttribute('data-top') || '', v = a.getAttribute('data-v'), c = a.getAttribute('data-c');
+    openBox(a, (a.getAttribute('title') || a.textContent) + ' \u00b7 ' + ED.toUpperCase(),
+      [{ label: '', href: top + 'compare/' + c + '.html?v=' + v + '#v' + v.split('-')[0], full: a.getAttribute('href'), fullLabel: 'Open the chapter' }]);
   }
   window.addEventListener('message', function (e) {
     var d = e.data;
@@ -225,7 +262,11 @@
     if (EMBED) {
       // show only the verse asked for; links to other pages open in the main window
       var id = window.location.hash.slice(1), sec = id && document.getElementById(id);
-      if (sec) sec.className += ' only';
+      var vm = /[?&]v=(\d+)-(\d+)/.exec(window.location.search);
+      if (vm && cmp) {          // a few verses of one translation
+        for (var vv = +vm[1]; vv <= +vm[2]; vv++) { var row = document.getElementById('v' + vv); if (row) row.className += ' only'; }
+        for (var ee = 0; ee < EDS.length; ee++) cmp.classList.toggle('hide-' + EDS[ee], EDS[ee] !== ED);
+      } else if (sec) sec.className += ' only';
       var as = document.querySelectorAll('a[href]');
       for (var q = 0; q < as.length; q++) if (as[q].getAttribute('href').charAt(0) !== '#') as[q].target = '_top';
       var tell = function () { if (window.parent !== window) window.parent.postMessage({ gsbHeight: Math.ceil((document.querySelector('main') || document.body).getBoundingClientRect().height) + 2 }, '*'); };
@@ -258,6 +299,13 @@
       go.addEventListener('input', function () { msg.textContent = ''; });
     }
 
+    // catechisms: jump to a question by number
+    var qj = document.querySelector('.qjump input');
+    if (qj) qj.addEventListener('change', function () {
+      var el = document.getElementById(qj.getAttribute('data-pre') + (+qj.value));
+      if (el) { window.location.hash = '#' + el.id; qj.blur(); }
+    });
+
     // chapter list in the page head
     var sel = document.querySelector('.chsel');
     if (sel) sel.addEventListener('change', function () { window.location.href = sel.value; });
@@ -266,6 +314,7 @@
     document.addEventListener('keydown', function (e) {
       var t = e.target, typing = t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA');
       if (e.key === 'Escape') { closePop(); closeGill(); return; }
+      if (e.key === 'Enter' && t && t.matches && t.matches('span.vn[data-s]') && !EMBED) { openVerse(t); return; }
       if (typing || e.altKey || e.ctrlKey || e.metaKey) return;
       if (e.key === '/' && go) { e.preventDefault(); go.focus(); return; }
       var a = e.key === 'ArrowLeft' ? document.querySelector('.cnav a[rel=prev]') : e.key === 'ArrowRight' ? document.querySelector('.cnav a[rel=next]') : null;
@@ -276,8 +325,11 @@
       var a = e.target.closest ? e.target.closest('.scripture a.xm, .scripture a.fnr, .gill a.nm:not(.fnb)') : null;
       if (a) { if (openPop(a)) e.preventDefault(); return; }
       if (pop && !(e.target.closest && e.target.closest('.pop'))) closePop();
-      var vn = e.target.closest ? e.target.closest('.scripture a.vn, .cmp a.vn') : null;
-      if (vn && !EMBED && e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) { e.preventDefault(); openGill(vn); return; }
+      var plainClick = !EMBED && e.button === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey;
+      var vn = e.target.closest ? e.target.closest('.scripture a.vn, .cmp a.vn, .scripture .vn[data-s], .cmp .vn[data-s]') : null;
+      if (vn && plainClick) { e.preventDefault(); openVerse(vn); return; }
+      var sr = e.target.closest ? e.target.closest('a.sref[data-v]') : null;
+      if (sr && plainClick) { e.preventDefault(); openRef(sr); return; }
       if (gbox && !(e.target.closest && e.target.closest('.gbox'))) closeGill();
     });
     window.addEventListener('resize', function () { closePop(); closeGill(); });
@@ -285,7 +337,9 @@
     // remember the last chapter read; offer it on the home page
     var art = document.querySelector('article.chapter, article.gill, article.cmpart');
     var h1 = art && art.querySelector('.chead h1');
-    if (h1 && !EMBED) {
+    var isConf = /\bconfpage\b/.test(document.body.className) && !/\/index\.html$|\/$/.test(window.location.pathname);
+    if (isConf && !EMBED) set('gsb-last', JSON.stringify({ href: window.location.pathname.split('/').slice(-2).join('/'), label: document.title.split(' \u2013 ')[0] }));
+    else if (h1 && !EMBED) {
       var path = (OWN ? OWN + '/' : '') + window.location.pathname.split('/').slice(-2).join('/');
       set('gsb-last', JSON.stringify({ href: path, label: (document.body.className.indexOf('gillpage') >= 0 ? 'Gill on ' : document.body.className.indexOf('cmppage') >= 0 ? 'Comparing ' : '') + h1.textContent.replace(/\s+/g, ' ') + (OWN ? ' (' + OWN.toUpperCase() + ')' : '') }));
     }
@@ -293,7 +347,7 @@
     if (res) {
       try {
         var last = JSON.parse(get('gsb-last') || 'null');
-        if (last && /^((kjv|bsb|msb)\/bible|gill|compare)\/[a-z0-9-]+\.html$/.test(last.href)) {
+        if (last && /^((kjv|bsb|msb)\/bible|gill|compare|confessions)\/[a-z0-9-]+\.html$/.test(last.href)) {
           var link = res.querySelector('a'); link.href = top + last.href; link.textContent = last.label; res.hidden = false;
         }
       } catch (err) {}
