@@ -413,3 +413,5 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 .hymns + .chq{margin-top:1.2rem}
 @media print{.hymns{display:none}}
 @media (max-width:76rem) and (min-width:46.01rem){.bar nav.links{gap:0 .75rem}.bar .go{flex-basis:7rem}}
+body.landingpage{--accent:var(--kjv)}
+.app-only{display:none}html.app .app-only{display:inline}html.app .web-only{display:none}

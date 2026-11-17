@@ -1,5 +1,6 @@
 (function () {
   var root = document.documentElement;
+  if (window.location.protocol === 'capacitor:') root.classList.add('app');      // the App Store app: everything is already on the device
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
