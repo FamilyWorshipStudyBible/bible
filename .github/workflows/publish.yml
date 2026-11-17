@@ -1,0 +1,43 @@
+# Publishes the Family Worship Bible to GitHub Pages.
+# The site is already finished, so nothing is built here: the files are packed up
+# and published as they are, with more time allowed than GitHub's usual 10 minutes.
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get the site's files
+        uses: actions/checkout@v4
+
+      - name: Set up Pages
+        uses: actions/configure-pages@v5
+
+      - name: Pack the site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+      - name: Publish
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          timeout: 2700000
