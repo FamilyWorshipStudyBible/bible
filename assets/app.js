@@ -143,6 +143,7 @@
     for (var i = 0; i < s.length; i++) {
       var k = s[i].charAt(0), id = s[i].slice(1), pp = id.split('.');
       if (k === 'l') tabs.push({ label: 'Confession ' + id, href: top + 'confessions/lbcf-' + pp[0] + '.html#p' + pp[1], fullLabel: 'Open the Confession' });
+      if (k === 'k') tabs.push({ label: 'Boys and Girls ' + id, href: top + 'confessions/cbg.html#q' + id, fullLabel: 'Open the catechism' });
       if (k === 'b') tabs.push({ label: 'Baptist Catechism ' + id, href: top + 'confessions/bc.html#q' + id, fullLabel: 'Open the catechism' });
       if (k === 'o') tabs.push({ label: 'Orthodox Catechism ' + id, href: top + 'confessions/oc.html#q' + id, fullLabel: 'Open the catechism' });
     }
@@ -218,8 +219,8 @@
     }
 
     // hosted copy: keep pages for offline reading
-    // opened as an app (from the home screen, or the App Store app) there is no browser Back button, so give one
-    var inApp = window.location.protocol === 'capacitor:' || !!window.Capacitor || window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    // opened from a home-screen icon there is no browser Back button, so give one
+    var inApp = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
     var barEl = document.querySelector('header.bar');
     if (inApp && barEl && !EMBED && window.history.length > 1) {
       var bk = document.createElement('button'); bk.type = 'button'; bk.className = 'back'; bk.setAttribute('aria-label', 'Back'); bk.textContent = '\u2039';
@@ -305,6 +306,30 @@
         msg.textContent = r.msg;
       });
       go.addEventListener('input', function () { msg.textContent = ''; });
+    }
+
+    // catechism questions at the end of a chapter: open the catechism last used, reveal answers
+    var chq = document.querySelectorAll('.chq details');
+    if (chq.length) {
+      var lastDoc = get('gsb-chq');
+      for (var d = 0; d < chq.length; d++) {
+        if (chq[d].getAttribute('data-doc') === lastDoc) chq[d].open = true;
+        chq[d].addEventListener('toggle', function (e) { if (e.target.open) set('gsb-chq', e.target.getAttribute('data-doc')); });
+      }
+      var showA = function (li, on) {
+        var a = li.querySelector('.qa'), b = li.querySelector('.reveal');
+        a.hidden = !on; b.textContent = on ? 'Hide answer' : 'Show answer'; b.setAttribute('aria-expanded', on ? 'true' : 'false');
+      };
+      document.querySelector('.chq').addEventListener('click', function (e) {
+        var b = e.target.closest('button'); if (!b) return;
+        if (b.classList.contains('reveal')) { var li = b.closest('li'); showA(li, li.querySelector('.qa').hidden); }
+        if (b.classList.contains('revealall')) {
+          var lis = b.closest('details').querySelectorAll('li'), all = true, i;
+          for (i = 0; i < lis.length; i++) if (lis[i].querySelector('.qa').hidden) all = false;
+          for (i = 0; i < lis.length; i++) showA(lis[i], !all);
+          b.textContent = all ? 'Show all answers' : 'Hide all answers';
+        }
+      });
     }
 
     // catechisms: jump to a question by number

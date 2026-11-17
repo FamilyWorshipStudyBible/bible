@@ -153,13 +153,6 @@ b.nm{font-weight:400;font-style:italic;margin-right:.2em}
 .om{color:var(--muted);font-size:.8em}
 .gill p.vt.om{font-size:.9rem;color:var(--muted)}
 
-details.xr{margin:0 0 .9rem;font-size:.84rem;line-height:1.45;font-feature-settings:"lnum"}
-details.xr summary{cursor:pointer;color:var(--accent);font-style:italic;list-style-position:outside;margin-left:1rem}
-details.xr summary span{color:var(--muted);font-style:normal;font-size:.9em;margin-left:.2em}
-details.xr[open] summary{margin-bottom:.3rem}
-.gill details.xr p{margin:0 0 .25rem 1rem;padding-left:1rem;text-indent:-1rem}
-details.xr p i{color:var(--muted)}
-
 .bookintro{margin-top:2.2rem;padding-top:1rem;border-top:1px solid var(--rule)}
 .bookintro h2{font-size:1.3rem;font-weight:400;margin:0}
 .bookintro .kicker{margin-bottom:.9rem}
@@ -168,15 +161,7 @@ a.fnr{font-style:normal;font-feature-settings:"lnum"}
 a.xm{font-size:.6em;vertical-align:.55em;line-height:0;font-style:italic;margin:0 .05em 0 .1em;padding:.3em .05em;text-indent:0}
 a.xm:hover{text-decoration:none;background:var(--mark);border-radius:3px}
 a.xm:target,a.fnr:target,.notes p:target{background:var(--mark);box-shadow:0 0 0 .2em var(--mark);border-radius:3px}
-.notes.xrefs{margin-top:1.2rem;font-feature-settings:"lnum"}
-.notes.xrefs p{padding-left:2.4rem;text-indent:-2.4rem;margin:.15rem 0}
-.notes.xrefs .fnb{display:inline-block;min-width:2.1rem;text-indent:0;font-style:italic}
-.notes.xrefs .fnb .fnref{font-style:normal}
-.notes.xrefs i{color:var(--ink)}
 
-.notes.xrefs p{padding-left:3.6rem;text-indent:-3.6rem}
-.notes.xrefs .fnb{min-width:1rem}
-.notes.xrefs .fnref{display:inline-block;min-width:2.3rem;text-indent:0}
 .scripture p.r a{color:inherit;text-decoration:underline;text-decoration-color:var(--rule);text-underline-offset:.15em}
 .scripture p.r a:hover{color:var(--accent)}
 
@@ -229,11 +214,10 @@ a.nm:hover{text-decoration:none;background:var(--mark);border-radius:3px}
 
 /* Gill in a box over the text */
 .gbox{position:absolute;z-index:9;width:min(34rem,calc(100vw - 16px));background:var(--gill);color:var(--ink);border:1px solid var(--rule);border-top:2px solid var(--accent);border-radius:4px;box-shadow:0 10px 36px rgba(0,0,0,.24);display:flex;flex-direction:column}
-.gbox-h,.gbox-f{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.4rem .8rem;font-size:.82rem}
+.gbox-h{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.4rem .8rem;font-size:.82rem}
 .gbox-h{border-bottom:1px solid var(--rule)}
 .gbox-h span{font-weight:600;font-feature-settings:"lnum"}
 .gbox-h button{font:inherit;color:var(--muted);background:none;border:1px solid var(--rule);border-radius:2rem;padding:0 .7em;cursor:pointer}
-.gbox-f{border-top:1px solid var(--rule);font-style:italic}
 .gbox iframe{border:0;width:100%;height:14rem;display:block;background:var(--gill)}
 html.embed{scroll-padding-top:0}
 html.embed .bar,html.embed .chead,html.embed .vstrip,html.embed .pager,html.embed .gill section,html.embed .gill section.only>h2{display:none}
@@ -357,23 +341,18 @@ html.embed .cmp .cv.only .vn{grid-row:auto;color:var(--muted)}
 /* ---- landing page */
 .bar .brand span{display:inline}
 .bar nav.links a.m{display:none}
-@media (max-width:60rem){.bar .brand{display:none}.bar nav.links a.m{display:inline}}
+@media (max-width:76rem){.bar .brand{display:none}.bar nav.links a.m{display:inline}}
 body.landingpage main{max-width:36rem}
 .landing{text-align:center;padding:2.6rem 0 1rem}
 .landing p{margin:0}
-.landing h1{font-size:3.1rem;font-weight:500;line-height:1.08;color:var(--accent);margin:.5rem 0 1.1rem}
+.landing h1{font-size:3.1rem;font-weight:500;line-height:1.08;color:var(--accent);margin:.5rem 0 1.1rem;text-wrap:balance}
 .landing .lead{font-size:1.1rem;font-style:italic;line-height:1.4;max-width:26rem;margin:0 auto}
 .landing .start{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem}
 .btn{display:inline-block;padding:.42rem 1.3rem;border-radius:2rem;border:1px solid var(--accent);color:var(--accent);min-height:44px;box-sizing:border-box;text-decoration:none!important}
-.btn.solid{background:var(--accent);color:var(--paper)}
 .btn:hover{filter:brightness(1.08)}
 .lcontents{margin-top:3.6rem}
 .lcontents h2{font-size:.95rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.16em;color:var(--accent);text-align:center;margin:0 0 .4rem}
 .lcontents nav{border-top:1px solid var(--rule)}
-.lcontents a{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.1rem 1.2rem;padding:.8rem 0;border-bottom:1px solid var(--rule);text-decoration:none}
-.lcontents a .n{font-size:1.25rem;color:var(--accent)}
-.lcontents a .w{font-size:.85rem;font-style:italic;color:var(--muted)}
-.lcontents a:hover .n{text-decoration:underline;text-underline-offset:.15em}
 .lfoot{margin:3rem 0 0;padding-top:1rem;border-top:1px solid var(--rule);font-size:.8rem;color:var(--muted);text-align:center}
 body.landingpage .offline{text-align:center}
 @media (max-width:30rem){.landing h1{font-size:2.3rem}.landing{padding-top:1.6rem}}
@@ -381,12 +360,56 @@ body.landingpage .offline{text-align:center}
 .btn.e-kjv{border-color:var(--kjv);color:var(--kjv)}.btn.e-bsb{border-color:var(--bsb);color:var(--bsb)}.btn.e-msb{border-color:var(--msb);color:var(--msb)}
 .landing .cont{margin-top:.8rem;font-style:italic;font-size:.9rem}
 .landing .cont a::before{content:"Continue where you left off: "}
-.lcontents a .n{max-width:100%}
 .gillhome .titlepage h1{font-size:2.1rem;margin-bottom:1rem}
 .gillhome .tp-how{max-width:30rem;margin:0 auto}
 /* ---- installed as an app: room for the status bar, and a way back */
 .bar{padding-top:max(.45rem,env(safe-area-inset-top))}
 body{padding-bottom:env(safe-area-inset-bottom)}
 .bar .back{order:-1;font-size:1.1rem;line-height:1;padding:.05rem .6rem .15rem}
-.lcontents a{display:block;text-align:center;font-size:1.25rem;line-height:1.3;color:var(--accent);padding:.75rem .5rem}
+.lcontents a{display:block;text-align:center;font-size:1.25rem;line-height:1.3;color:var(--accent);padding:.75rem .5rem;border-bottom:1px solid var(--rule);text-decoration:none}
 .lcontents a:hover{text-decoration:underline;text-underline-offset:.15em}
+/* ---- catechism questions at the end of a chapter */
+.chq{margin:2.6rem 0 1.4rem;padding-top:1.3rem;border-top:1px solid var(--rule)}
+.chq h2{font-size:.9rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.15em;color:var(--accent);text-align:center;margin:0 0 .15rem}
+.chq-how{font-size:.8rem;font-style:italic;color:var(--muted);text-align:center;margin:0 0 .9rem}
+.chq details{border-top:1px solid var(--rule)}
+.chq details:last-of-type{border-bottom:1px solid var(--rule)}
+.chq summary{display:flex;align-items:baseline;gap:.8rem;padding:.7rem .2rem;min-height:44px;box-sizing:border-box;cursor:pointer;list-style:none}
+.chq summary::-webkit-details-marker{display:none}
+.chq summary .nm{flex:1;font-size:1.1rem;color:var(--accent)}
+.chq summary .ct{font-size:.75rem;color:var(--muted);font-feature-settings:"lnum"}
+.chq summary::after{content:"+";width:1rem;text-align:center;color:var(--accent)}
+.chq details[open] summary::after{content:"\2212"}
+.chq summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chq .all{text-align:right;margin:-.3rem 0 .3rem}
+.chq button{font:inherit;cursor:pointer}
+.chq .revealall{background:none;border:0;color:var(--muted);font-size:.78rem;font-style:italic;padding:.3rem 0}
+.chq ol{list-style:none;margin:0 0 .9rem;padding:0}
+.chq li{display:grid;grid-template-columns:3.2rem minmax(0,1fr);column-gap:.5rem;padding:.6rem 0;border-top:1px solid var(--rule)}
+.chq .qn{font-size:.78rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.05em;padding-top:.15rem;font-feature-settings:"lnum";text-decoration:none}
+.chq p{margin:0}
+.chq .q{font-weight:600;line-height:1.4}
+.chq .qv{font-size:.78rem;margin-top:.1rem;font-feature-settings:"lnum"}
+.chq .qv a{text-decoration:none}
+.chq .qa{margin-top:.45rem;padding:.4rem .65rem;background:var(--gill);border-radius:6px;font-size:.92rem;line-height:1.5}
+.chq .reveal{margin-top:.35rem;padding:.1rem .8rem;min-height:32px;border-radius:2rem;border:1px solid var(--accent);background:none;color:var(--accent);font-size:.78rem}
+.chq .reveal[aria-expanded=true]{background:var(--accent);color:var(--paper)}
+@media print{.chq{display:none}}
+/* ---- the children's catechism page */
+.cbgdoc .notice{font-size:.78rem;line-height:1.45;color:var(--muted);border:1px solid var(--rule);border-radius:6px;padding:.7rem .9rem;margin:0 0 1.4rem}
+.cbgdoc .notice p{margin:0 0 .35rem}
+.cbgdoc .refnote{font-size:.88rem;margin-bottom:1.4rem}
+.cbgdoc .refnote h2.sect{margin-top:0;padding-top:0;border:0}
+.cbgdoc .refnote .where{font-style:italic;color:var(--muted)}
+.cbgdoc .lbl{color:var(--accent);font-weight:600;margin-right:.2em}
+.cbgdoc .item.qa h3 .num{font-variant-caps:normal;letter-spacing:0}
+/* ---- suggested hymns */
+.hymns{margin:2.2rem 0 0;padding-top:1rem;border-top:1px solid var(--rule);text-align:center;font-size:.92rem;line-height:1.6}
+.hymns .lbl{display:block;font-size:.8rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.15em;color:var(--accent)}
+.hymns a{text-decoration:none;font-feature-settings:"lnum";white-space:nowrap}
+.hymns a:hover i{text-decoration:underline}
+.hymns .sep{color:var(--muted);margin:0 .3em}
+.hymns .src{display:block;font-size:.75rem;font-style:italic;color:var(--muted)}
+.hymns + .chq{margin-top:1.2rem}
+@media print{.hymns{display:none}}
+@media (max-width:76rem) and (min-width:46.01rem){.bar nav.links{gap:0 .75rem}.bar .go{flex-basis:7rem}}

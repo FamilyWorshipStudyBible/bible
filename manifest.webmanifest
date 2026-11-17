@@ -1,6 +1,6 @@
 {
- "name": "Particular Baptist Study Bible",
- "short_name": "PB Study Bible",
+ "name": "Family Worship Bible",
+ "short_name": "Family Bible",
  "start_url": "./index.html",
  "scope": "./",
  "display": "standalone",
