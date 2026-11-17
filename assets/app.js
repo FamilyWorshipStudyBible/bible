@@ -219,8 +219,8 @@
     }
 
     // hosted copy: keep pages for offline reading
-    // opened from a home-screen icon there is no browser Back button, so give one
-    var inApp = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    // opened from a home-screen icon, or as the App Store app, there is no browser Back button, so give one
+    var inApp = window.location.protocol === 'capacitor:' || window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
     var barEl = document.querySelector('header.bar');
     if (inApp && barEl && !EMBED && window.history.length > 1) {
       var bk = document.createElement('button'); bk.type = 'button'; bk.className = 'back'; bk.setAttribute('aria-label', 'Back'); bk.textContent = '\u2039';
