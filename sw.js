@@ -1,5 +1,5 @@
 // Keeps pages on the device so the site opens again without a connection.
-var CACHE = 'gsb-202611191022';
+var CACHE = 'gsb-202611191202';
 var SHELL = ["index.html", "manifest.webmanifest", "assets/style.css", "assets/app.js", "assets/books.js", "assets/garamond.woff2", "assets/garamond-italic.woff2", "assets/icon-180.png", "assets/icon-192.png", "bsb/index.html", "msb/index.html", "kjv/index.html"];
 
 function plain(res) {
