@@ -31,7 +31,8 @@ body.gillpage .bar{background:var(--gill)}
 .tp-with{font-style:italic;color:var(--muted)}
 .tp-gill{font-size:1.35rem;margin-top:.3rem!important;line-height:1.25}
 .tp-by{font-style:italic;margin-top:.3rem!important}
-.tp-orn{font-size:1.5rem;color:var(--accent);margin:1.4rem 0 1rem!important}
+.tp-orn{color:var(--accent);margin:1.6rem 0 1.1rem!important;line-height:0}
+.tp-orn .seal{width:3.4rem;height:3.4rem}
 .tp-how{color:var(--muted);font-size:.92rem}
 .tp-sample{display:inline-block;margin-top:1.2rem!important;font-size:.8rem;border:1px solid var(--rule);border-radius:2rem;padding:.1em 1em;color:var(--muted)}
 .booksec{display:grid;grid-template-columns:1fr 1fr;gap:0 2rem;padding:1.5rem 0;border-bottom:1px solid var(--rule)}
