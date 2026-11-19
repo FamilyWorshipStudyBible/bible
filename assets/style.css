@@ -1,11 +1,11 @@
-@font-face{font-family:"EB Garamond";src:url(garamond.woff2) format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
-@font-face{font-family:"EB Garamond";src:url(garamond-italic.woff2) format("woff2");font-weight:400 800;font-style:italic;font-display:swap}
+@font-face{font-family:Literata;src:url(literata.woff2) format("woff2");font-weight:200 900;font-style:normal;font-display:swap}
+@font-face{font-family:Literata;src:url(literata-italic.woff2) format("woff2");font-weight:200 900;font-style:italic;font-display:swap}
 :root{--paper:#fbfbf8;--ink:#1d1c1a;--muted:#6a665e;--rule:#dcd9cf;--accent:#1f4b82;--gill:#f0efe8;--mark:#f3e9c4;color-scheme:light}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#8fb6ea;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}}
 :root[data-theme=dark]{--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#8fb6ea;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}
 *{box-sizing:border-box}
-html{font-size:20px;-webkit-text-size-adjust:100%;scroll-padding-top:3.5rem}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:"EB Garamond",Garamond,"Iowan Old Style","Palatino Linotype",Georgia,serif;line-height:1.55;font-feature-settings:"kern","liga","onum";text-rendering:optimizeLegibility}
+html{font-size:18px;-webkit-text-size-adjust:100%;scroll-padding-top:3.5rem}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Literata,Garamond,"Iowan Old Style","Palatino Linotype",Georgia,serif;line-height:1.55;font-feature-settings:"kern","liga","onum";text-rendering:optimizeLegibility}
 body.gillpage{background:var(--gill)}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:.15em}
@@ -140,13 +140,13 @@ table.plan tr.era td{font-variant-caps:all-small-caps;letter-spacing:.12em;color
 table.plan tr.today th,table.plan tr.today td{background:var(--mark)}
 table.plan tr:target th,table.plan tr:target td{background:var(--mark)}
 
-@media (max-width:30rem){html{font-size:18px}.bar{position:static;padding:.4rem .9rem}.bar nav{gap:0 .8rem}html{scroll-padding-top:.5rem}main{padding:1.2rem .9rem 4rem}table.plan.mc{table-layout:fixed}table.plan.mc th:first-child{width:8%}table.plan th,table.plan td{padding-right:.3rem}.booksec{grid-template-columns:1fr}table.plan.mc{font-size:.74rem}.scripture p.q1{padding-left:2.2em}.scripture p.q2{padding-left:2.2em}dl.conc dd p{grid-template-columns:4.8rem 1fr}}
+@media (max-width:30rem){html{font-size:16.5px}.bar{position:static;padding:.4rem .9rem}.bar nav{gap:0 .8rem}html{scroll-padding-top:.5rem}main{padding:1.2rem .9rem 4rem}table.plan.mc{table-layout:fixed}table.plan.mc th:first-child{width:8%}table.plan th,table.plan td{padding-right:.3rem}.booksec{grid-template-columns:1fr}table.plan.mc{font-size:.74rem}.scripture p.q1{padding-left:2.2em}.scripture p.q2{padding-left:2.2em}dl.conc dd p{grid-template-columns:4.8rem 1fr}}
 @media print{.bar,.pager{display:none}html{font-size:11pt}}
 
 table.plan td a+a,table.plan td .na+.na{margin-left:0}
 
 .he{font-family:"SBL Hebrew","Ezra SIL","Times New Roman","Noto Serif Hebrew","Noto Sans Hebrew",serif;font-size:.92em}
-.gr{font-family:"EB Garamond","GFS Didot","Times New Roman",serif}
+.gr{font-family:Literata,"GFS Didot","Times New Roman",serif}
 sup.nm{font-size:.62em;font-style:italic;color:var(--muted);line-height:0;margin-left:.1em}
 b.nm{font-weight:400;font-style:italic;margin-right:.2em}
 .gill p.gnote{margin:0 0 .15rem}

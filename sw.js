@@ -1,6 +1,6 @@
 // Keeps pages on the device so the site opens again without a connection.
-var CACHE = 'gsb-202611191414';
-var SHELL = ["index.html", "manifest.webmanifest", "assets/style.css", "assets/app.js", "assets/books.js", "assets/garamond.woff2", "assets/garamond-italic.woff2", "assets/icon-180.png", "assets/icon-192.png", "assets/favicon.svg", "assets/favicon-32.png", "bsb/index.html", "msb/index.html", "kjv/index.html"];
+var CACHE = 'gsb-202611191435';
+var SHELL = ["index.html", "manifest.webmanifest", "assets/style.css", "assets/app.js", "assets/books.js", "assets/literata.woff2", "assets/literata-italic.woff2", "assets/icon-180.png", "assets/icon-192.png", "assets/favicon.svg", "assets/favicon-32.png", "bsb/index.html", "msb/index.html", "kjv/index.html"];
 
 function plain(res) {
   // some hosts answer "page.html" with a redirect to "page"; a redirected answer cannot be replayed for a page load
