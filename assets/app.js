@@ -13,12 +13,12 @@
   }
 
   // ---- translation: fixed on a translation's own pages; chosen by the reader on shared pages (Gill, compare)
-  var EDS = ['kjv', 'bsb', 'msb'];
+  var EDS = ['bsb', 'msb', 'kjv'];
   var OWN = root.getAttribute('data-ed'), ED = OWN;
   if (OWN) set('gsb-ed', OWN);
   else {
     var qe = /[?&]ed=(kjv|bsb|msb)/.exec(window.location.search), se = get('gsb-ed');
-    ED = qe ? qe[1] : (EDS.indexOf(se) >= 0 ? se : 'kjv');
+    ED = qe ? qe[1] : (EDS.indexOf(se) >= 0 ? se : 'bsb');
     root.setAttribute('data-ed', ED); set('gsb-ed', ED);
   }
   function withEd(h) {      // point a link on a shared page at the chosen translation

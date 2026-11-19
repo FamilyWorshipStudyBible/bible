@@ -1,8 +1,8 @@
 @font-face{font-family:"EB Garamond";src:url(garamond.woff2) format("woff2");font-weight:400 800;font-style:normal;font-display:swap}
 @font-face{font-family:"EB Garamond";src:url(garamond-italic.woff2) format("woff2");font-weight:400 800;font-style:italic;font-display:swap}
-:root{--paper:#fbfbf8;--ink:#1d1c1a;--muted:#6a665e;--rule:#dcd9cf;--accent:#9c1c22;--gill:#f0efe8;--mark:#f3e9c4;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#e58a86;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}}
-:root[data-theme=dark]{--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#e58a86;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}
+:root{--paper:#fbfbf8;--ink:#1d1c1a;--muted:#6a665e;--rule:#dcd9cf;--accent:#1f4b82;--gill:#f0efe8;--mark:#f3e9c4;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#8fb6ea;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}}
+:root[data-theme=dark]{--paper:#17181b;--ink:#e4e1d8;--muted:#9a968c;--rule:#34353a;--accent:#8fb6ea;--gill:#1f2024;--mark:#4a4226;color-scheme:dark}
 *{box-sizing:border-box}
 html{font-size:20px;-webkit-text-size-adjust:100%;scroll-padding-top:3.5rem}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:"EB Garamond",Garamond,"Iowan Old Style","Palatino Linotype",Georgia,serif;line-height:1.55;font-feature-settings:"kern","liga","onum";text-rendering:optimizeLegibility}
@@ -233,10 +233,6 @@ html.embed .gill section.only p.vt{margin-top:0}
 
 .scripture span.vn{color:var(--ink)}
 
-:root{--kjv:#9c1c22}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--kjv:#e58a86}}:root[data-theme=dark]{--kjv:#e58a86}
-:root[data-ed=kjv]{--accent:var(--kjv)}
-.gill p.vt.e-kjv{display:none}:root[data-ed=kjv] .gill p.vt.e-kjv{display:block}
-.cmp.hide-kjv .e-kjv{display:none}.cmp .e-kjv::before,.cmph .e-kjv,.cmpsel .e-kjv{color:var(--kjv)}
 :root{--bsb:#1f4b82}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bsb:#8fb6ea}}:root[data-theme=dark]{--bsb:#8fb6ea}
 :root[data-ed=bsb]{--accent:var(--bsb)}
 .gill p.vt.e-bsb{display:none}:root[data-ed=bsb] .gill p.vt.e-bsb{display:block}
@@ -245,6 +241,10 @@ html.embed .gill section.only p.vt{margin-top:0}
 :root[data-ed=msb]{--accent:var(--msb)}
 .gill p.vt.e-msb{display:none}:root[data-ed=msb] .gill p.vt.e-msb{display:block}
 .cmp.hide-msb .e-msb{display:none}.cmp .e-msb::before,.cmph .e-msb,.cmpsel .e-msb{color:var(--msb)}
+:root{--kjv:#9c1c22}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--kjv:#e58a86}}:root[data-theme=dark]{--kjv:#e58a86}
+:root[data-ed=kjv]{--accent:var(--kjv)}
+.gill p.vt.e-kjv{display:none}:root[data-ed=kjv] .gill p.vt.e-kjv{display:block}
+.cmp.hide-kjv .e-kjv{display:none}.cmp .e-kjv::before,.cmph .e-kjv,.cmpsel .e-kjv{color:var(--kjv)}
 /* ---- combined site: translation picker, compare view, offline box */
 .edsel{font:inherit;font-weight:600;color:var(--accent);background:var(--paper);border:1px solid var(--rule);border-radius:2rem;padding:.05rem .45rem;cursor:pointer}
 body.gillpage .edsel{background:var(--gill)}
@@ -415,3 +415,4 @@ body{padding-bottom:env(safe-area-inset-bottom)}
 @media (max-width:76rem) and (min-width:46.01rem){.bar nav.links{gap:0 .75rem}.bar .go{flex-basis:7rem}}
 body.landingpage{--accent:var(--kjv)}
 .app-only{display:none}html.app .app-only{display:inline}html.app .web-only{display:none}
+:root[data-ed=bsb] body.landingpage .edsel{color:var(--bsb)}:root[data-ed=msb] body.landingpage .edsel{color:var(--msb)}
