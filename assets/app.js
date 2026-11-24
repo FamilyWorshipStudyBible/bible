@@ -398,6 +398,80 @@
       if (window.location.hash === '#today') row.scrollIntoView({ block: 'center' });
     }
 
+    // reading plans: tick off readings, catch up to today, start over (ticks stay on this device)
+    var ptab = document.querySelector('table.plan.mc, table.plan.ch');
+    if (ptab && nav) {
+      var mc = /\bmc\b/.test(ptab.className), pkey = 'gsb-plan-' + (mc ? 'mcheyne' : 'chronological');
+      var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var todayKey = id.slice(1), done = {}, cells = [], undoSnap = null;
+      try { var arr = JSON.parse(get(pkey) || '[]'); for (var a = 0; a < arr.length; a++) done[arr[a]] = 1; } catch (err) {}
+      function save() { var out = []; for (var k in done) if (done[k]) out.push(k); out.sort(); set(pkey, JSON.stringify(out)); }
+      function dateName(k) { return parseInt(k.slice(3), 10) + ' ' + MONTHS[parseInt(k.slice(0, 2), 10) - 1]; }
+      var ptabs = document.querySelectorAll('table.plan'), rows = document.querySelectorAll('table.plan tr[id^="d"]');
+      for (var r = 0; r < rows.length; r++) {
+        var day = rows[r].id.slice(1), tds = rows[r].querySelectorAll('td');
+        for (var c = 0; c < tds.length; c++) {
+          var key = mc ? day + '.' + c : day, first = tds[c].querySelector('a, .na');
+          var cb = document.createElement('input');
+          cb.type = 'checkbox'; cb.className = 'tick'; cb.setAttribute('data-k', key);
+          cb.setAttribute('aria-label', 'Read: ' + dateName(day) + ', ' + (first ? first.textContent : 'reading'));
+          tds[c].insertBefore(cb, tds[c].firstChild);
+          cells.push({ k: key, day: day, cb: cb, td: tds[c] });
+        }
+      }
+      var box = document.createElement('div'); box.className = 'planprog';
+      box.innerHTML = '<p class="pstat"></p><p class="pnext"></p>' +
+        '<p class="pact"><button type="button" class="pcatch">Catch up to today</button> <button type="button" class="preset">Start over</button></p>' +
+        '<p class="pmsg" hidden></p><p class="pnote">Your ticks are kept on this device only.</p>';
+      nav.parentNode.insertBefore(box, nav);
+      var stat = box.querySelector('.pstat'), nxt = box.querySelector('.pnext'), msg = box.querySelector('.pmsg');
+      function refresh() {
+        var n = 0, firstOpen = null, behind = {}, i;
+        for (i = 0; i < cells.length; i++) {
+          var on = !!done[cells[i].k];
+          cells[i].cb.checked = on; cells[i].td.classList.toggle('done', on);
+          if (on) n++;
+          else { if (!firstOpen) firstOpen = cells[i].day; if (cells[i].day < todayKey) behind[cells[i].day] = 1; }
+        }
+        var nb = 0; for (i in behind) nb++;
+        var total = cells.length, unit = mc ? 'readings' : 'days';
+        stat.textContent = n.toLocaleString() + ' of ' + total.toLocaleString() + ' ' + unit + ' read. Today is ' + dateName(todayKey) + '.' +
+          (nb ? ' ' + nb + (nb === 1 ? ' earlier day is' : ' earlier days are') + ' not finished.' : '');
+        if (n === total) nxt.textContent = 'You have read the whole plan. Start over to read it again.';
+        else nxt.innerHTML = 'Next unread: <a href="#d' + firstOpen + '">' + dateName(firstOpen) + '</a>';
+      }
+      function say(text) {
+        msg.innerHTML = ''; msg.appendChild(document.createTextNode(text + ' '));
+        var u = document.createElement('button'); u.type = 'button'; u.className = 'linkbtn'; u.textContent = 'Undo';
+        u.addEventListener('click', function () { done = undoSnap || {}; undoSnap = null; save(); refresh(); msg.hidden = true; });
+        msg.appendChild(u); msg.hidden = false;
+      }
+      function snap() { undoSnap = {}; for (var k in done) undoSnap[k] = done[k]; }
+      function onTick(e) {
+        var t = e.target; if (!t.classList || !t.classList.contains('tick')) return;
+        if (t.checked) done[t.getAttribute('data-k')] = 1; else delete done[t.getAttribute('data-k')];
+        save(); refresh();
+      }
+      for (var pt = 0; pt < ptabs.length; pt++) ptabs[pt].addEventListener('change', onTick);
+      box.querySelector('.pcatch').addEventListener('click', function () {
+        snap(); var added = 0;
+        for (var i = 0; i < cells.length; i++) if (cells[i].day < todayKey && !done[cells[i].k]) { done[cells[i].k] = 1; added++; }
+        save(); refresh();
+        if (added) say('Marked ' + added.toLocaleString() + (mc ? (added === 1 ? ' reading' : ' readings') : (added === 1 ? ' day' : ' days')) + ' before today as read.');
+        else { msg.textContent = 'Everything before today is already ticked.'; msg.hidden = false; }
+      });
+      box.querySelector('.preset').addEventListener('click', function () {
+        msg.innerHTML = '';
+        msg.appendChild(document.createTextNode('Clear every tick in this plan? '));
+        var y = document.createElement('button'); y.type = 'button'; y.className = 'linkbtn'; y.textContent = 'Yes, start over';
+        var no = document.createElement('button'); no.type = 'button'; no.className = 'linkbtn'; no.textContent = 'Cancel';
+        y.addEventListener('click', function () { snap(); done = {}; save(); refresh(); say('All ticks cleared.'); });
+        no.addEventListener('click', function () { msg.hidden = true; });
+        msg.appendChild(y); msg.appendChild(document.createTextNode(' ')); msg.appendChild(no); msg.hidden = false;
+      });
+      refresh();
+    }
+
     // concordance: narrow the word list while typing
     var wf = document.getElementById('wf');
     if (wf) {
