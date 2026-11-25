@@ -1,6 +1,6 @@
 # Publishes the Family Worship Bible to GitHub Pages.
 # The site is already finished, so nothing is built here: the files are packed up
-# and published as they are, with more time allowed than GitHub's usual 10 minutes.
+# in one step and published in a second, with more time allowed than GitHub's usual 10 minutes.
 name: Publish site
 
 on:
@@ -13,17 +13,16 @@ permissions:
   pages: write
   id-token: write
 
+# One publish at a time. A newer upload waits for the current one to finish
+# instead of cutting it off halfway.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  publish:
+  pack:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 30
     steps:
       - name: Get the site's files
         uses: actions/checkout@v4
@@ -35,9 +34,20 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
+          # a fresh name on every attempt, so a re-run never finds two packed copies
+          name: github-pages-${{ github.run_attempt }}
 
+  publish:
+    needs: pack
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Publish
         id: deployment
         uses: actions/deploy-pages@v4
         with:
           timeout: 2700000
+          artifact_name: github-pages-${{ github.run_attempt }}
