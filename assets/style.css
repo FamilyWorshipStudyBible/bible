@@ -435,3 +435,23 @@ table.plan td{padding-left:1.4rem}
 table.plan td.done a,table.plan td.done .na{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule)}
 @media (max-width:30rem){table.plan td{padding-left:0}table.plan input.tick{display:block;margin:0 0 .15rem}}
 table.plan tr.era td{padding-left:0}
+/* Bible Hub discussion questions under each chapter */
+.bhq{margin:2.2rem 0 0;padding-top:1rem;border-top:1px solid var(--rule)}
+.hymns + .bhq{margin-top:1.2rem;padding-top:0;border-top:0}
+.bhq h2{font-size:.9rem;font-weight:600;font-variant-caps:all-small-caps;letter-spacing:.15em;color:var(--accent);text-align:center;margin:0 0 .6rem}
+.bhq ol{margin:0 auto;padding-left:1.4rem;max-width:34rem;font-feature-settings:"lnum"}
+.bhq li{margin:0 0 .55rem;line-height:1.5}
+.bhq li::marker{color:var(--accent)}
+.bhq .src{text-align:center;font-size:.75rem;font-style:italic;color:var(--muted);margin:.2rem 0 0}
+.bhq + .chq{margin-top:1.6rem}
+.landing .lead-a{display:block;font-style:normal;font-weight:500;color:var(--accent);margin-bottom:.25rem}
+/* audio Bible */
+.tog button.listen{font:inherit;background:none;border:0;padding:0;color:var(--accent);cursor:pointer;text-decoration:none}
+.tog button.listen:hover{text-decoration:underline}
+.tog button.listen::before{content:"";display:inline-block;width:0;height:0;border-left:.5em solid currentColor;border-top:.32em solid transparent;border-bottom:.32em solid transparent;margin-right:.35em;vertical-align:.05em}
+.tog button.listen[aria-expanded=true]::before{border:0;width:.5em;height:.6em;border-left:.17em solid currentColor;border-right:.17em solid currentColor;box-sizing:border-box}
+.player{margin:.6rem auto 1.2rem;max-width:34rem;padding:.7rem .8rem .6rem;border:1px solid var(--rule);border-radius:6px}
+.player audio{display:block;width:100%;height:2.5rem}
+.player .pmeta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem 1rem;margin-top:.45rem;font-size:.85rem;color:var(--muted)}
+.player select{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--rule);border-radius:4px;padding:.1rem .3rem;margin-left:.3rem}
+.player .perr{margin:.4rem 0 0;font-size:.85rem;color:var(--accent)}

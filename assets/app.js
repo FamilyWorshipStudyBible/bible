@@ -472,6 +472,52 @@
       refresh();
     }
 
+    // audio Bible: a Listen button on every chapter, streaming the public-domain recordings from OpenBible.com
+    var lb = document.querySelector('button.listen');
+    if (lb) {
+      var ed = document.documentElement.getAttribute('data-ed') || 'bsb', ab = lb.getAttribute('data-a'), nt = parseInt(ab, 10) >= 40;
+      var NARR = ed === 'msb' ? [['david', 'David', 'msb/MSB_', '_D']] : ed === 'kjv' ? [['david', 'David', 'kjv/KJV_', '']] :
+        [['souer', 'Bob Souer', 'souer/BSB_', ''], ['hays', 'Barry Hays', 'hays/BSB_', '_H'], ['gilbert', 'Jordan Scott Gilbert', 'gilbert/BSB_', '_G']]
+          .concat(nt ? [['gilbert_music', 'Jordan Scott Gilbert, with music', 'gilbert_music/BSB_', '_Gm']] : []).concat([['david', 'David', 'david/BSB_', '_D']]);
+      var panel = null, player = null;
+      function pick() { var want = get('gsb-narrator-' + ed); for (var i = 0; i < NARR.length; i++) if (NARR[i][0] === want) return NARR[i]; return NARR[0]; }
+      function srcFor(n) { return 'https://openbible.com/audio/' + n[2] + ab + n[3] + '.mp3'; }
+      function build() {
+        panel = document.createElement('div'); panel.className = 'player';
+        var n = pick(), sel = '';
+        if (NARR.length > 1) {
+          sel = '<label class="narr">Read by <select>';
+          for (var i = 0; i < NARR.length; i++) sel += '<option value="' + NARR[i][0] + '"' + (NARR[i] === n ? ' selected' : '') + '>' + NARR[i][1] + '</option>';
+          sel += '</select></label>';
+        } else sel = '<span class="narr">Read by ' + n[1] + '</span>';
+        panel.innerHTML = '<audio controls preload="none" playsinline></audio><div class="pmeta">' + sel +
+          '<label class="speed">Speed <select><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></label></div>' +
+          '<p class="perr" hidden>The recording could not be loaded. Audio needs an internet connection.</p>';
+        lb.parentNode.parentNode.insertBefore(panel, lb.parentNode.nextSibling);
+        player = panel.querySelector('audio'); player.src = srcFor(n);
+        var ns = panel.querySelector('.narr select'), sp = panel.querySelector('.speed select'), er = panel.querySelector('.perr');
+        var rate = parseFloat(get('gsb-audio-speed') || '1'); sp.value = String(rate); if (!sp.value) sp.value = '1';
+        player.playbackRate = parseFloat(sp.value);
+        player.addEventListener('loadedmetadata', function () { player.playbackRate = parseFloat(sp.value); });
+        player.addEventListener('error', function () { er.hidden = false; });
+        player.addEventListener('playing', function () { er.hidden = true; });
+        sp.addEventListener('change', function () { player.playbackRate = parseFloat(sp.value); set('gsb-audio-speed', sp.value); });
+        if (ns) ns.addEventListener('change', function () {
+          for (var i = 0; i < NARR.length; i++) if (NARR[i][0] === ns.value) {
+            if (NARR[i][0] !== 'gilbert_music') set('gsb-narrator-' + ed, ns.value);
+            var playing = !player.paused; player.src = srcFor(NARR[i]); player.playbackRate = parseFloat(sp.value);
+            if (playing) player.play().catch(function () {});
+          }
+        });
+      }
+      lb.addEventListener('click', function () {
+        if (!panel) { build(); player.play().catch(function () {}); lb.setAttribute('aria-expanded', 'true'); lb.textContent = 'Hide player'; return; }
+        var open = panel.hidden; panel.hidden = !open;
+        if (!open) player.pause();
+        lb.setAttribute('aria-expanded', open ? 'true' : 'false'); lb.textContent = open ? 'Hide player' : 'Listen';
+      });
+    }
+
     // concordance: narrow the word list while typing
     var wf = document.getElementById('wf');
     if (wf) {
